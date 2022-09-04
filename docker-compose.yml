@@ -1,0 +1,39 @@
+version: "3.9" #optional since v1.27.0
+
+services:
+  nest:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: bifos/nest-study
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    environment:
+      - TZ=Asia/Seoul
+    networks:
+      - fos_network
+    volumes:
+      - ./src:/app/src
+      - /app/node_moudles # for dev
+    command: npm run start:dev
+
+  db:
+    image: postgres:latest
+    container_name: "postgres"
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_DB: "${DB_NAME}"
+    volumes:
+      - ${DB_DATA_DIR}:/var/lib/postgresql/data
+    networks:
+      - fos_network
+
+networks:
+  fos_network:
+    name: fos_network
+    driver: bridge
