@@ -32,6 +32,19 @@ services:
       - ${DB_DATA_DIR}:/var/lib/postgresql/data
     networks:
       - fos_network
+  
+  test-db:
+    image: postgres:latest
+    container_name: "test-db"
+    restart: always
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_USER: fos_test
+      POSTGRES_PASSWORD: fos_test
+      POSTGRES_DB: fos_test_db
+    networks:
+      - fos_network
 
 networks:
   fos_network:
