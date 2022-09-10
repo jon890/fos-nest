@@ -15,9 +15,9 @@ import { UserModule } from './user/user.module';
       database: 'bifos_db',
       autoLoadModels: true,
       synchronize: true,
-      sync: {
-        alter: true,
-      },
+      // sync: {
+      //   alter: true,
+      // },
     }),
     UserModule,
   ],
