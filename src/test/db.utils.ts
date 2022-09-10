@@ -17,7 +17,9 @@ export class TestDbUtils {
       logging: console.log,
     });
 
-    testDB.addModels(models);
+    if (models && models.length) {
+      testDB.addModels(models);
+    }
 
     // Creates the database Structure
     await testDB.sync({

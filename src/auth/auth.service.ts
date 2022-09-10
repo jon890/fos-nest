@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { User } from 'src/user/user.model';
-import { UserService } from 'src/user/user.service';
+import { User } from './../user/user.model';
+import { UserService } from './../user/user.service';
 
 export type Credentials = {
   email: string;
