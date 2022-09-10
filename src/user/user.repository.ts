@@ -1,6 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { IsEmail } from 'sequelize-typescript';
 import { User } from './user.model';
+
+export type CreateUserParam = {
+  email: string;
+  password: string;
+  nickname?: string;
+};
 
 @Injectable()
 export class UserRepository {
@@ -11,6 +18,14 @@ export class UserRepository {
       where: {
         email,
       },
+    });
+  }
+
+  create({ email, password, nickname }: CreateUserParam) {
+    return this.userModel.create({
+      email,
+      password,
+      ...(nickname && { nickname }), // optional
     });
   }
 }

@@ -20,7 +20,7 @@ export class User extends Model<
   InferCreationAttributes<User>
 > {
   @PrimaryKey
-  @Column(DataType.BIGINT)
+  @Column({ autoIncrement: true, type: DataType.BIGINT })
   id: bigint;
 
   @AllowNull(false)
