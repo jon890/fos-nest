@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { IsEmail } from 'sequelize-typescript';
 import { User } from './user.model';
 
 export type CreateUserParam = {

@@ -1,5 +1,7 @@
 import { ModelCtor, Sequelize } from 'sequelize-typescript';
 
+// TODO: test db provider로 변경해보기
+// 싱글톤이면서, 다른데에서 모두 주입 가능하면 편할 듯하다!
 export class TestDbUtils {
   static async create(...models: ModelCtor[]): Promise<Sequelize> {
     // NOTE: Sequelize DB는 메모리에서 동작할 수 없음
@@ -15,7 +17,9 @@ export class TestDbUtils {
       logging: console.log,
     });
 
-    testDB.addModels(models);
+    if (models && models.length) {
+      testDB.addModels(models);
+    }
 
     // Creates the database Structure
     await testDB.sync({
