@@ -2,8 +2,9 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-import { getModelToken, SequelizeModule } from '@nestjs/sequelize';
+import { SequelizeModule } from '@nestjs/sequelize';
 import { Test } from '@nestjs/testing';
+import { UserRepository } from './../src/user/user.repository';
 import { AuthModule } from './../src/auth/auth.module';
 import { User } from './../src/user/user.model';
 
@@ -51,7 +52,7 @@ describe('Auth', () => {
         SequelizeModule.forFeature([User]),
       ],
     })
-      .overrideProvider(getModelToken(User))
+      .overrideProvider(UserRepository)
       .useValue(userRepository)
       .compile();
 
@@ -78,7 +79,7 @@ describe('Auth', () => {
       })
       .then((result) => {
         expect(result.statusCode).toEqual(200);
-        expect(result.payload).toEqual(expectedData);
+        expect(JSON.parse(result.payload)).toMatchObject(expectedData);
       });
   });
 });

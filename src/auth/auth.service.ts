@@ -24,6 +24,6 @@ export class AuthService {
       return null;
     }
 
-    return user;
+    return user.toJSON<User>();
   }
 }
