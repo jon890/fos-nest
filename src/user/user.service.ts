@@ -8,4 +8,8 @@ export class UserService {
   findByEmail(email: string) {
     return this.userRepository.findByEmail(email);
   }
+
+  findById(id: bigint) {
+    return this.userRepository.findById(id);
+  }
 }
