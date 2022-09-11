@@ -64,7 +64,7 @@ describe('Auth', () => {
     await app.getHttpAdapter().getInstance().ready();
   });
 
-  it('/POST auth/login => 로그인한 유저 정보가 반환된다.', () => {
+  it('/POST auth/login => 로그인 후에 JWT 토큰이 발급된다.', () => {
     const expectedData = { ...mockUser };
     delete expectedData.password;
 
@@ -79,7 +79,9 @@ describe('Auth', () => {
       })
       .then((result) => {
         expect(result.statusCode).toEqual(200);
-        expect(JSON.parse(result.payload)).toMatchObject(expectedData);
+        // expect(JSON.parse(result.payload)).toMatchObject(expectedData);
+        expect(result.payload).toBeTruthy();
+        console.log(`generate token ===> ${result.payload}`);
       });
   });
 });

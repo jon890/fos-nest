@@ -20,6 +20,10 @@ export class UserRepository {
     });
   }
 
+  findById(id: bigint): Promise<User | null> {
+    return this.userModel.findByPk(id.toString());
+  }
+
   create({ email, password, nickname }: CreateUserParam) {
     return this.userModel.create({
       email,

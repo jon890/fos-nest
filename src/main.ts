@@ -1,3 +1,4 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import {
   FastifyAdapter,
@@ -12,6 +13,13 @@ async function bootstrap() {
       // console에 찍혀서 별로 보기 안좋음
       // NestLogger를 사용하자
       //logger: true
+    }),
+  );
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      enableDebugMessages: true,
+      transform: true,
     }),
   );
   await app.listen(3000, '0.0.0.0');

@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './../user/user.model';
 import { UserService } from './../user/user.service';
+import { JwtService } from '@nestjs/jwt';
+import { LoginUser } from './interface/fastify.request-with-user.interface';
 
 export type Credentials = {
   email: string;
@@ -9,7 +11,10 @@ export type Credentials = {
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async validateUser(credentials: Credentials): Promise<User | null> {
     const user = await this.userService.findByEmail(credentials.email);
@@ -25,5 +30,10 @@ export class AuthService {
     }
 
     return user.toJSON<User>();
+  }
+
+  async generateToken(user: LoginUser) {
+    const payload = { username: user.email, sub: user.email };
+    return this.jwtService.sign(payload);
   }
 }
